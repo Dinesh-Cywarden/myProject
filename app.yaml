@@ -1,0 +1,19 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: chatBot-frontend
+  description: 'this is chabot for AI project'
+  labels:
+    owner: dineshCywarden
+    team: frontend
+spec:
+  type: service
+  lifecycle: development
+  owner: dineshCywarden
+  links:
+    - url: https://github.com/Dinesh-Cywarden/myProject
+  sources:
+    - type: github
+      target: https://github.com/Dinesh-Cywarden/myProject
+  integrations:
+    - github.com/Dinesh-Cywarden/myProject
