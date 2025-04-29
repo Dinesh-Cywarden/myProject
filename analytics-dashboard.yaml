@@ -1,0 +1,28 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: analytics-dashboard
+  description: User-facing dashboard for business analytics and reporting
+  labels:
+    example.com/tier: frontend
+  annotations:
+    example.com/service-discovery: analytics-web
+    circleci.com/project-slug: github/example-org/analytics-dashboard
+  tags:
+    - react
+    - typescript
+    - visualization
+  links:
+    - url: https://design.example-org.com/analytics
+      title: Design System
+      icon: brush
+      type: design
+    - url: https://jira.example-org.com/projects/ANALYTICS
+      title: JIRA Board
+      icon: list
+      type: issue-tracker
+spec:
+  type: website
+  lifecycle: production
+  owner: data-insights-team
+  system: analytics-platform
