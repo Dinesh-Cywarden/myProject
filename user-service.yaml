@@ -1,0 +1,28 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: user-service
+  description: Microservice handling user authentication and management
+  labels:
+    example.com/tier: backend
+  annotations:
+    example.com/service-discovery: user-svc
+    github.com/project-slug: example-org/user-service
+  tags:
+    - golang
+    - microservice
+    - auth
+  links:
+    - url: https://grafana.example-org.com/d/user-service
+      title: Service Metrics
+      icon: dashboard
+      type: monitoring
+    - url: https://docs.example-org.com/user-service
+      title: Service Documentation
+      icon: book
+      type: documentation
+spec:
+  type: service
+  lifecycle: production
+  owner: platform-team
+  system: core-infrastructure
