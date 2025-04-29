@@ -26,4 +26,4 @@ npm install lucide-react
 ```bash
 npm run dev
 ```
-Visit http://localhost:5173 in your browser to view this project live.
+Visit http://localhost:5173 to view this project live in your browser.
