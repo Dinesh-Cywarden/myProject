@@ -1,0 +1,31 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: payment-processor
+  description: Service handling payment processing and financial transactions
+  labels:
+    example.com/tier: backend
+    example.com/pci-compliance: level1
+  annotations:
+    example.com/service-discovery: payments
+    datadog.com/dashboard-id: pay-proc-main
+    sentry.io/project-slug: example-org/payment-processor
+  tags:
+    - java
+    - spring
+    - finance
+    - security
+  links:
+    - url: https://runbooks.example-org.com/payment-processor
+      title: Service Runbooks
+      icon: code
+      type: runbook
+    - url: https://vault.example-org.com/ui/secrets/payment-keys
+      title: Secrets Management
+      icon: lock
+      type: security
+spec:
+  type: service
+  lifecycle: production
+  owner: financial-services-team
+  system: payment-infrastructure
