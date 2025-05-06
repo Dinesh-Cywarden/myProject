@@ -15,7 +15,7 @@ git clone https://github.com/Dinesh-Cywarden/myProject.git
 cd myProject
 ```
 
-### 2. Install Dependencies
+### 2. Install Dependencies: see documentation before applying these imports
 ```bash
 npm install
 npm install tailwindcss @tailwindcss/vite
