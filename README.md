@@ -1,6 +1,6 @@
 # ⚡ Vite Project
 
-A modern front-end setup powered by **Vite**, **Tailwind CSS**, **Framer Motion**, and **Lucide React**. Happy Coding!!!
+A modern front-end setup powered by **Vite**, **Tailwind CSS**, **Framer Motion**, and **Lucide React**. Not so Happy Coding!!!
 
 ---
 
