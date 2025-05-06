@@ -1,0 +1,41 @@
+name: Check README and Report to Port
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  check-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Check for README.md
+        id: check_readme
+        run: |
+          if [ -f README.md ]; then
+            echo "README exists"
+            echo "result=success" >> $GITHUB_OUTPUT
+          else
+            echo "README is missing"
+            echo "result=failure" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Report to Port
+        run: |
+          curl -X POST https://api.getport.io/v1/events \
+            -H "Authorization: Bearer ${{ secrets.PORT_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+                  "eventType": "CHECK_STATUS",
+                  "entity": {
+                    "identifier": "'"${{ github.head_ref }}"'",
+                    "blueprint": "pull-request"
+                  },
+                  "properties": {
+                    "status": "'"${{ steps.check_readme.outputs.result }}"'",
+                    "description": "README.md check: '"${{ steps.check_readme.outputs.result }}"'"
+                  }
+                }'
