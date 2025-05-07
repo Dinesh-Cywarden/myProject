@@ -1,4 +1,4 @@
-# ⚡ Vite Project
+# ⚡ My Project
 
 A modern front-end setup powered by **Vite**, **Tailwind CSS**, **Framer Motion**, and **Lucide React**. Happy Coding!!!
 
