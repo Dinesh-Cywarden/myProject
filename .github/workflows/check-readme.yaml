@@ -1,41 +1,34 @@
-name: Check README and Report to Port
+name: Check for README.md
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, synchronize, reopened]
 
 jobs:
   check-readme:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Check for README.md
         id: check_readme
         run: |
           if [ -f README.md ]; then
-            echo "README exists"
             echo "result=success" >> $GITHUB_OUTPUT
           else
-            echo "README is missing"
             echo "result=failure" >> $GITHUB_OUTPUT
           fi
 
-      - name: Report to Port
-        run: |
-          curl -X POST https://api.getport.io/v1/events \
-            -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkhSUXlQcWF1amJmUWpFblltaFVGeiJ9.eyJwb3J0X3VzZXJfaWQiOiJ1c2VyX2tRcTNSU1ppUzVhNHFJQ1MiLCJodHRwczovL2FwaS5wb3J0LmlvL29yZ0lkIjoib3JnX1c0VnpVYmxidkU5NU1zTVoiLCJodHRwczovL2FwaS5wb3J0LmlvL2lzRGlzYWJsZWQiOmZhbHNlLCJvcmdJZCI6Im9yZ19XNFZ6VWJsYnZFOTVNc01aIiwiaXNEaXNhYmxlZCI6ZmFsc2UsImlzcyI6Imh0dHBzOi8vYXV0aC5nZXRwb3J0LmlvLyIsInN1YiI6Imdvb2dsZS1vYXV0aDJ8MTA1NjczNzk0MjY3MTU4NDk0MjMyIiwiYXVkIjpbImh0dHBzOi8vYXBpLnBvcnQuaW8iLCJodHRwczovL3BvcnQtcHJvZC5ldS5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNzQ2NTU2ODIyLCJleHAiOjE3NDY2NDMyMjIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJhenAiOiI5NkllcUwzNlEwVUlCeElmVjFvcU9rRFdVNlVzbGZEaiJ9.BQE5FJGbxNIY4wViBwDt35tLWv8sQ5LlMs_RF0FQsEXMsPz7G6YE__lKudmjYI65Qbc_pWrsh18uJjYdn00GBET84M2V6uLkfyYDGTnDdL3DvV_BPaVjz-Wu5Hu1Xaarg3rciP3wlPzuRVSlI2yzqjhnKoQZEgkpGoLV9oFRQ9SBcdryCOtr7q7yiJCK2xha8Ucxl4puRtbihtmoot9ni7OaIxKIoB8QCRrgvW5XSh8S002KJfqi6V-Rmqxk9cc2shG3mLJNG698Rvh-9C-7nzjsGYnlnJREsuha5bdhHbJRjY9q7kUz9onTX6-E6b0MD4mDPJmCz55MpjAblJOvxw" \
-            -H "Content-Type: application/json" \
-            -d '{
-                  "eventType": "CHECK_STATUS",
-                  "entity": {
-                    "identifier": "'"${{ github.head_ref }}"'",
-                    "blueprint": "pull-request"
-                  },
-                  "properties": {
-                    "status": "'"${{ steps.check_readme.outputs.result }}"'",
-                    "description": "README.md check: '"${{ steps.check_readme.outputs.result }}"'"
-                  }
-                }'
+      - name: Push README check to Port
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          blueprint: MyPullRequest
+          identifier: "${{ github.event.pull_request.number }}"
+          checks: |
+            {
+              "has_readme": "${{ steps.check_readme.outputs.result }}"
+            }
