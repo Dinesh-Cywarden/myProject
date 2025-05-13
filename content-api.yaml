@@ -1,0 +1,26 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: content-api
+  description: API for managing content and media assets
+  labels:
+    example.com/tier: backend
+    example.com/sla: high
+  annotations:
+    example.com/service-discovery: content-api
+    kubernetes.io/service-name: content-api
+    jenkins.io/job-full-name: example-org/content-api-ci
+  tags:
+    - nodejs
+    - api
+    - rest
+  links:
+    - url: https://swagger.example-org.com/content-api
+      title: API Docs
+      icon: code
+      type: openapi
+spec:
+  type: service
+  lifecycle: production
+  owner: content-management-team
+  system: content-platform
